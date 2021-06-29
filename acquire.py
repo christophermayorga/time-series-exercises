@@ -96,3 +96,19 @@ def get_sales():
             df = pd.DataFrame(sales_list)
             df.to_csv('sales.csv')
         return df
+    
+def get_all_sales_data():
+    if os.path.isfile('combined.csv'):
+        df = pd.read_csv('combined.csv', index_col=0)
+        return df
+    else:
+        items = get_items()
+        stores = get_stores()
+        sales = get_sales()
+        sales['store_id'] = sales['store']
+        sales = sales.drop(columns='store')
+        sales_plus_stores = pd.merge(sales, stores, on='store_id', how='inner')
+        sales_plus_stores['item_id'] = sales_plus_stores['item']
+        sales_plus_stores = sales_plus_stores.drop(columns='item')
+        df = pd.merge(sales_plus_stores, items, on='item_id', how='inner')
+        return df

@@ -112,3 +112,8 @@ def get_all_sales_data():
         sales_plus_stores = sales_plus_stores.drop(columns='item')
         df = pd.merge(sales_plus_stores, items, on='item_id', how='inner')
         return df
+    
+def get_germany_data():
+    url = 'https://raw.githubusercontent.com/jenfly/opsd/master/opsd_germany_daily.csv'
+    df = pd.read_csv(url)
+    return df

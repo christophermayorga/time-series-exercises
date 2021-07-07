@@ -13,7 +13,6 @@ def prep_combine(df):
     return df
 
 def prep_opsd(df):
-    df = df.drop(columns=['Unnamed: 0'])
     df.Date = pd.to_datetime(df.Date)
     df = df.set_index('Date')
     df['month']=df.index.month
